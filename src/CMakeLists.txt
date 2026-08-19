@@ -57,7 +57,9 @@ endforeach()
 
 foreach(_coin_target ${SUBDIRS} glelements)
   if(TARGET ${_coin_target})
-    target_compile_definitions(${_coin_target} PRIVATE COIN_BUILDING_COIN)
+    target_compile_definitions(${_coin_target} PRIVATE
+      COIN_BUILDING_COIN
+      $<$<PLATFORM_ID:Windows>:NOMINMAX>)
   endif()
 endforeach()
 
@@ -216,7 +218,9 @@ else()
   )
 endif()
 
-target_compile_definitions(${PROJECT_NAME} PRIVATE COIN_BUILDING_COIN)
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+  COIN_BUILDING_COIN
+  $<$<PLATFORM_ID:Windows>:NOMINMAX>)
 
 # Export a Coin::Coin target when the library is built as a cmake subdirectory
 # so that the same target can be linked using find_package and this method
