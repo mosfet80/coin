@@ -16,7 +16,11 @@
     )
 configure_file(setup.h.cmake.in setup.h)
 
-add_compile_options(-DHAVE_CONFIG_H -DCOIN_INTERNAL -DCOIN_DEBUG=$<CONFIG:Debug>)
+add_compile_definitions(
+  HAVE_CONFIG_H
+  COIN_INTERNAL
+  COIN_DEBUG=$<CONFIG:Debug>
+)
 
 include_directories(BEFORE
   "${PROJECT_BINARY_DIR}/include"
@@ -50,6 +54,13 @@ set(SUBDIRS
 foreach(_subdir ${SUBDIRS})
   add_subdirectory(${_subdir})
 endforeach()
+
+foreach(_coin_target ${SUBDIRS} glelements)
+  if(TARGET ${_coin_target})
+    target_compile_definitions(${_coin_target} PRIVATE COIN_BUILDING_COIN)
+  endif()
+endforeach()
+
 add_subdirectory(doc)
 
 # Adding source groups for IDE's (Visual Studio, XCode, Qt Creator, etc.)
@@ -204,6 +215,8 @@ else()
     $<TARGET_OBJECTS:xml>
   )
 endif()
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE COIN_BUILDING_COIN)
 
 # Export a Coin::Coin target when the library is built as a cmake subdirectory
 # so that the same target can be linked using find_package and this method
