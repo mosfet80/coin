@@ -1,9 +1,5 @@
-/* include/Inventor/system/gl-headers.h. Generated from gl-headers.h.cmake.in by CMake. */
-#ifndef COIN_GLHEADERS_H
-#define COIN_GLHEADERS_H
-
 /**************************************************************************\
- * Copyright (c) Kongsberg Oil & Gas Technologies AS
+ * Copyright (c) 2026 FreeCAD contributors
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,34 +30,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-/*
- * This header file is supposed to take care of all operating system
- * dependent anomalies connected to including the gl.h header file.
+#include "CoinTest.h"
+
+/**
+ * Verify Coin's GLU runtime-loader contract. In particular, macOS provides
+ * GLU as part of the OpenGL framework, so a configured build must resolve the
+ * tessellator entry points without requiring a separately linked GLU library.
  */
+#define COIN_INTERNAL
+#include "config.h"
+#include "glue/GLUWrapper.h"
 
-/* This define is at least needed before inclusion of the header files
-   that are part of NVidia's Linux drivers v41.91. Without it, none of
-   the extension and OpenGL 1.1+ function prototypes will be set up. */
-#ifndef GL_GLEXT_PROTOTYPES
-#define GL_GLEXT_PROTOTYPES 1
-#endif
+BOOST_AUTO_TEST_SUITE(GLUWrapper_TestSuite)
 
-#if defined(COIN_BUILDING_COIN) && defined(_WIN32)
-#  include <windows.h>
-#  include <GL/gl.h>
-#  include "glue/khronos/GL/glext.h"
+BOOST_AUTO_TEST_CASE(runtimeLoader)
+{
+  const GLUWrapper_t * wrapper = GLUWrapper();
+  BOOST_REQUIRE(wrapper != NULL);
 
+#ifdef GLU_IS_PART_OF_GL
+  BOOST_REQUIRE_EQUAL(wrapper->available, 1);
+  BOOST_REQUIRE(wrapper->gluNewTess != NULL);
+  BOOST_REQUIRE(wrapper->gluDeleteTess != NULL);
+
+  coin_GLUtessellator * tessellator = wrapper->gluNewTess();
+  BOOST_REQUIRE(tessellator != NULL);
+  wrapper->gluDeleteTess(tessellator);
 #else
-# if defined(_WIN32)
-#  include <windows.h>
-#  include <GL/gl.h>
-# elif defined(__APPLE__)
-#  include <OpenGL/gl.h>
-#  include <OpenGL/glext.h>
-# else
-#  include <GL/gl.h>
-#  include <GL/glext.h>
-# endif
+  if (wrapper->available) {
+    BOOST_CHECK(wrapper->gluNewTess != NULL);
+    BOOST_CHECK(wrapper->gluDeleteTess != NULL);
+  }
 #endif
+}
 
-#endif /* ! COIN_GLHEADERS_H */
+BOOST_AUTO_TEST_SUITE_END()

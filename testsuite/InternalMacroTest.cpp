@@ -1,9 +1,5 @@
-/* include/Inventor/system/gl-headers.h. Generated from gl-headers.h.cmake.in by CMake. */
-#ifndef COIN_GLHEADERS_H
-#define COIN_GLHEADERS_H
-
 /**************************************************************************\
- * Copyright (c) Kongsberg Oil & Gas Technologies AS
+ * Copyright (c) 2026 FreeCAD contributors
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -34,34 +30,18 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 \**************************************************************************/
 
-/*
- * This header file is supposed to take care of all operating system
- * dependent anomalies connected to including the gl.h header file.
+/**
+ * Prove that internal tests can include private implementation headers while
+ * retaining the ABI role of ordinary Coin consumers.
  */
-
-/* This define is at least needed before inclusion of the header files
-   that are part of NVidia's Linux drivers v41.91. Without it, none of
-   the extension and OpenGL 1.1+ function prototypes will be set up. */
-#ifndef GL_GLEXT_PROTOTYPES
-#define GL_GLEXT_PROTOTYPES 1
+#ifndef COIN_INTERNAL
+#error InternalMacroTest must have access to private Coin interfaces.
 #endif
 
-#if defined(COIN_BUILDING_COIN) && defined(_WIN32)
-#  include <windows.h>
-#  include <GL/gl.h>
-#  include "glue/khronos/GL/glext.h"
-
-#else
-# if defined(_WIN32)
-#  include <windows.h>
-#  include <GL/gl.h>
-# elif defined(__APPLE__)
-#  include <OpenGL/gl.h>
-#  include <OpenGL/glext.h>
-# else
-#  include <GL/gl.h>
-#  include <GL/glext.h>
-# endif
+#ifdef COIN_BUILDING_COIN
+#error InternalMacroTest is not part of the Coin library.
 #endif
 
-#endif /* ! COIN_GLHEADERS_H */
+#include "misc/SbHash.h"
+
+static_assert(sizeof(SbHash<int, int>) > 0, "private Coin type is unavailable");
