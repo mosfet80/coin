@@ -3466,6 +3466,13 @@
       <type>SbBool</type>
       <name>intersect</name>
       <anchorfile>classSbDPPlane.html</anchorfile>
+      <anchor>aff71a5a19142b9194a1caeddff34cea2</anchor>
+      <arglist>(const SbDPPlane &amp;p1, const SbDPPlane &amp;p2, SbVec3d &amp;point) const</arglist>
+    </member>
+    <member kind="function">
+      <type>SbBool</type>
+      <name>intersect</name>
+      <anchorfile>classSbDPPlane.html</anchorfile>
       <anchor>a99cca71249e7bd73004ec924a62d2bf0</anchor>
       <arglist>(const SbDPPlane &amp;pl, SbDPLine &amp;line) const</arglist>
     </member>
@@ -5431,6 +5438,13 @@
       <anchorfile>classSbPlane.html</anchorfile>
       <anchor>a092d50c631e724272b159d9282bb13d0</anchor>
       <arglist>(const SbLine &amp;l, SbVec3f &amp;intersection) const</arglist>
+    </member>
+    <member kind="function">
+      <type>SbBool</type>
+      <name>intersect</name>
+      <anchorfile>classSbPlane.html</anchorfile>
+      <anchor>a575ca0b938882afbe9f01c6872a23e00</anchor>
+      <arglist>(const SbPlane &amp;p1, const SbPlane &amp;p2, SbVec3f &amp;point) const</arglist>
     </member>
     <member kind="function">
       <type>SbBool</type>
@@ -49536,6 +49550,13 @@
       <anchor>aaa7b5e960e4c751a0e5a7c3c8f75c1fe</anchor>
       <arglist>(const int length)</arglist>
     </member>
+    <member kind="function" static="yes">
+      <type>static SoNodeKitPath *</type>
+      <name>fromPath</name>
+      <anchorfile>classSoNodeKitPath.html</anchorfile>
+      <anchor>ace9ac99707ae53768011f761b759f4cd</anchor>
+      <arglist>(const SoPath *path)</arglist>
+    </member>
     <member kind="function" protection="protected">
       <type></type>
       <name>SoNodeKitPath</name>
@@ -49552,10 +49573,49 @@
     </member>
     <member kind="friend">
       <type>friend int</type>
+      <name>operator!=</name>
+      <anchorfile>classSoNodeKitPath.html</anchorfile>
+      <anchor>a5d24e25fca99e56932e7e3b9a6b56851</anchor>
+      <arglist>(const SoNodeKitPath &amp;p1, const SoNodeKitPath &amp;p2)</arglist>
+    </member>
+    <member kind="friend">
+      <type>friend int</type>
       <name>operator==</name>
       <anchorfile>classSoNodeKitPath.html</anchorfile>
       <anchor>a8067b1878ec9a4848bb132f84b37c66f</anchor>
       <arglist>(const SoNodeKitPath &amp;p1, const SoNodeKitPath &amp;p2)</arglist>
+    </member>
+  </compound>
+  <compound kind="class">
+    <name>SoNodeKitPathView</name>
+    <filename>classSoNodeKitPathView.html</filename>
+    <member kind="function">
+      <type>int</type>
+      <name>getLength</name>
+      <anchorfile>classSoNodeKitPathView.html</anchorfile>
+      <anchor>a05aa0802b6aabb34378d4f851eff6351</anchor>
+      <arglist>(void) const</arglist>
+    </member>
+    <member kind="function">
+      <type>SoNode *</type>
+      <name>getNode</name>
+      <anchorfile>classSoNodeKitPathView.html</anchorfile>
+      <anchor>adb79bb48828e0acf129eb97391fab5f1</anchor>
+      <arglist>(const int index) const</arglist>
+    </member>
+    <member kind="function">
+      <type>SoNode *</type>
+      <name>getNodeFromTail</name>
+      <anchorfile>classSoNodeKitPathView.html</anchorfile>
+      <anchor>a7d9460c9c898a87a0ed0b16e4c876427</anchor>
+      <arglist>(const int index) const</arglist>
+    </member>
+    <member kind="function">
+      <type>SoNode *</type>
+      <name>getTail</name>
+      <anchorfile>classSoNodeKitPathView.html</anchorfile>
+      <anchor>ae3446a8f39c03641b28040860928ee4f</anchor>
+      <arglist>(void) const</arglist>
     </member>
   </compound>
   <compound kind="class">
@@ -53017,6 +53077,13 @@
       <anchorfile>classSoPath.html</anchorfile>
       <anchor>aa9b6748214f721d3962575406885ecfb</anchor>
       <arglist>(SoNotList *const l) const</arglist>
+    </member>
+    <member kind="function">
+      <type>SoNodeKitPathView</type>
+      <name>nodeKitPath</name>
+      <anchorfile>classSoPath.html</anchorfile>
+      <anchor>ab2bcfe7f9958ce1e1dd77ce136841cd7</anchor>
+      <arglist>(void) const</arglist>
     </member>
     <member kind="function">
       <type>SoPath &amp;</type>
@@ -62438,6 +62505,7 @@
       <anchor>a017db6daa54156ec1a2f8198fb30d531</anchor>
       <arglist>(const SbTime &amp;t)</arglist>
     </member>
+    <docanchor file="classSoSensorManager.html" title="Integrating sensors with an event loop">sensors_event_loop</docanchor>
   </compound>
   <compound kind="class">
     <name>SoSeparator</name>
@@ -90502,8 +90570,8 @@
       <type>void</type>
       <name>cc_xml_doc::cc_xml_doc_get_filter_cb</name>
       <anchorfile>group__coin__XML.html</anchorfile>
-      <anchor>gaf233557263433cc126ab09e3d1f214da</anchor>
-      <arglist>(const cc_xml_doc *doc, cc_xml_filter_cb *&amp;cb, void *&amp;userdata)</arglist>
+      <anchor>ga9832dc0e3d3a8ca5893d08f4878277bd</anchor>
+      <arglist>(const cc_xml_doc *doc, cc_xml_filter_cb **cb, void **userdata)</arglist>
     </member>
     <member kind="function">
       <type>cc_xml_doc *</type>
